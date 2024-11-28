@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestión de Turnos</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Gestión de Turnos</h1>
+
+    <!-- Formulario para crear un nuevo turno -->
+    <div class="form-container">
+      <h2>Crear Turno</h2>
+      <p>* Los turnos solo pueden ser de lunes a viernes entre las 07:00 y las 19:00.</p>
+      <form id="turnoForm">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" placeholder="Nombre completo" required />
+
+        <label for="fecha">Fecha:</label>
+        <input type="date" id="fecha" required />
+
+        <label for="hora">Hora:</label>
+        <input type="time" id="hora" min="07:00" max="19:00" required />
+
+        <button type="submit">Crear Turno</button>
+      </form>
+    </div>
+
+    <!-- Lista dinámica de turnos -->
+    <div class="turnos-container">
+      <h2>Turnos Programados</h2>
+      <ul id="turnosList">
+        <!-- Los turnos aparecerán aquí dinámicamente -->
+      </ul>
+    </div>
+  </div>
+
+  <!-- Archivo principal de la lógica -->
+  <script src="app.js" type="module"></script>
+</body>
+</html>
