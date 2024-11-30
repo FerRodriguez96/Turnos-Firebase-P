@@ -1,16 +1,18 @@
+import { config } from "./config";
+
 // Importar Firebase y configurarlo
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
 import { getDatabase, ref, push, get, update, remove } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-database.js";
 
 // Configuración de Firebase
 const firebaseConfig = {
-  apiKey: "AIzaSyA9fXI8OgDPSKGigJw7u1p01PZqthGsJjQ",
-  authDomain: "turnos-base-508ec.firebaseapp.com",
-  databaseURL: "https://turnos-base-508ec-default-rtdb.firebaseio.com",
-  projectId: "turnos-base-508ec",
-  storageBucket: "turnos-base-508ec.firebasestorage.app",
-  messagingSenderId: "953703139280",
-  appId: "1:953703139280:web:de24098ac2faa6de2ddbd5"
+  apiKey: config.apiKey,
+  authDomain: config.authDomain,
+  databaseURL: config.databaseURL,
+  projectId: config.projectId,
+  storageBucket: config.storageBucket,
+  messagingSenderId: config.messagingSenderId,
+  appId: config.appId
 };
 
 // Inicializar Firebase
