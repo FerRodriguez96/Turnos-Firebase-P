@@ -1,23 +1,14 @@
-import { config } from "./config";
+import { firebaseConfig } from "./config.js";
 
 // Importar Firebase y configurarlo
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
 import { getDatabase, ref, push, get, update, remove } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-database.js";
-
-// Configuración de Firebase
-const firebaseConfig = {
-  apiKey: config.apiKey,
-  authDomain: config.authDomain,
-  databaseURL: config.databaseURL,
-  projectId: config.projectId,
-  storageBucket: config.storageBucket,
-  messagingSenderId: config.messagingSenderId,
-  appId: config.appId
-};
+import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
 
 // Inicializar Firebase
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
+const auth = getAuth(app);
 
 // Validar que la fecha seleccionada sea un día entre semana
 function validarFecha() {
@@ -133,6 +124,60 @@ window.deleteTurno = async (id) => {
     console.error("Error al eliminar el turno:", error);
   }
 };
+
+// Observador de estado de autenticación
+function observador() {
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      if (user.emailVerified) {
+        console.log("Usuario autenticado y correo verificado:", user.email);
+        document.getElementById("contenido").innerHTML = `
+          <h1>Bienvenido, ${user.email}</h1>
+          <button id="cerrarSesion">Cerrar sesión</button>
+        `;
+        document
+          .getElementById("cerrarSesion")
+          .addEventListener("click", cerrarSesion);
+      } else {
+        alert("Debes verificar tu correo antes de acceder al contenido.");
+        signOut(auth).then(() => {
+          location.href = "login.html"; // Redirigir al login si no está verificado
+        });
+      }
+    } else {
+      console.log("No hay usuario autenticado");
+      location.href = "login.html";
+    }
+  });
+}
+
+// Función para cerrar sesión
+function cerrarSesion() {
+  signOut(auth)
+    .then(() => {
+      console.log("Sesión cerrada");
+      location.href = "login.html";
+    })
+    .catch((error) => {
+      console.error("Error al cerrar sesión:", error.message);
+    });
+}
+// Verificar si el usuario está autenticado
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    document.getElementById("nombreUsuario").textContent = user.displayName || "Usuario";
+    document.getElementById("navbar").style.display = "block";
+    document.getElementById("turnosSection").style.display = "block";
+  } else {
+    window.location.replace("/login.html");
+  }
+});
+
+// Exponer cerrarSesion para usarlo en el HTML
+window.cerrarSesion = cerrarSesion;
+
+// Ejecutar el observador al cargar la página
+document.addEventListener("DOMContentLoaded", observador);
 
 // Inicializar la lista de turnos al cargar la página
 document.addEventListener("DOMContentLoaded", renderTurnos);
