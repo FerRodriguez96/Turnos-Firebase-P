@@ -86,15 +86,64 @@ const renderTurnos = async () => {
       const formattedDate = formatDate(turno.fecha); // Formatear la fecha
 
       const li = document.createElement("li");
-      li.innerHTML = `
-        <strong>${turno.nombre}</strong> - ${formattedDate} a las ${turno.hora}
-        <br>Status: ${turno.status}
-        <br>
-        <button onclick="updateTurno('${id}', 'Ocupado', '${turno.nombre}')">Marcar como ocupado</button>
-        <button onclick="updateTurno('${id}', 'Disponible', null)">Marcar como disponible</button>
-        <button onclick="deleteTurno('${id}')">Eliminar</button>
-      `;
+      li.className = "turno-item"; // Clase para aplicar estilos
+
+      // Contenedor para el contenido principal (nombre, fecha y hora)
+      const infoContainer = document.createElement("div");
+      infoContainer.className = "turno-info";
+
+      // Nombre
+      const nameElement = document.createElement("strong");
+      nameElement.textContent = turno.nombre;
+
+      // Fecha y hora
+      const detailsElement = document.createElement("span");
+      detailsElement.textContent = ` - ${formattedDate} a las ${turno.hora}`;
+
+      // Estado
+      const statusElement = document.createElement("span");
+      statusElement.textContent = `Estado: ${turno.status}`;
+      statusElement.className = "turno-status";
+
+      // Botones (Ocupado, Disponible, Eliminar)
+      const buttonContainer = document.createElement("div");
+      buttonContainer.className = "button-group";
+
+      const ocupadoButton = document.createElement("button");
+      ocupadoButton.className = "btn-ocupado";
+      ocupadoButton.textContent = "Ocupado";
+      ocupadoButton.onclick = () => updateTurno(id, "Ocupado", turno.nombre);
+
+      const disponibleButton = document.createElement("button");
+      disponibleButton.className = "btn-disponible";
+      disponibleButton.textContent = "Disponible";
+      disponibleButton.onclick = () => updateTurno(id, "Disponible", null);
+
+      const eliminarButton = document.createElement("button");
+      eliminarButton.className = "btn-eliminar";
+      eliminarButton.textContent = "Eliminar";
+      eliminarButton.onclick = () => deleteTurno(id);
+
+      // Añadir los botones al contenedor de botones
+      buttonContainer.appendChild(ocupadoButton);
+      buttonContainer.appendChild(disponibleButton);
+      buttonContainer.appendChild(eliminarButton);
+
+      // Añadir elementos al contenedor de información
+      infoContainer.appendChild(nameElement);
+      infoContainer.appendChild(detailsElement);
+
+      // Añadir todos los elementos al `li`
+      li.appendChild(infoContainer);
+      li.appendChild(statusElement);
+      li.appendChild(buttonContainer);
+
+      // Añadir el elemento `li` a la lista
       turnosList.appendChild(li);
+
+
+      turnosList.appendChild(li);
+
     });
   } else {
     turnosList.innerHTML = "<p>No hay turnos disponibles.</p>";
