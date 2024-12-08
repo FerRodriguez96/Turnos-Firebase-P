@@ -68,18 +68,6 @@ function observador() {
 
   document.getElementById("btnIngresar").addEventListener("click", ingresar);
   document.getElementById("btnRegistrar").addEventListener("click", registrar);
-// Mostrar el modal de registro
-document.getElementById("openModal").addEventListener("click", function() {
-  document.getElementById("registerModal").style.display = "block";
-});
-
-// Cerrar el modal de registro (puedes agregar un botón de cerrar en el modal si lo deseas)
-document.getElementById("registerModal").addEventListener("click", function(event) {
-  if (event.target === this) {  // Si el clic fue en el fondo del modal
-    this.style.display = "none";
-  }
-});
-
 
 // Iniciar el observador al cargar la página
 observador();

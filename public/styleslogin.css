@@ -124,32 +124,6 @@ body {
     margin-top: 10px;
   }
   
-  /* Modal de registro */
-  .modal-dialog {
-    max-width: 50%;
-    margin: 100px auto; /* Centrado vertical y horizontal */
-    padding: 2rem;
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    display: flex;             /* Activa el modelo de Flexbox */
-    flex-direction: column;    /* Alinea los elementos de arriba hacia abajo (en una columna) */
-    justify-content: center;   /* Centra los elementos en la dirección vertical */
-    align-items: center;       /* Centra los elementos en la dirección horizontal */
-    height: 40vh; 
-  }
-  
-  .modal-content {
-    padding: 1.5rem;
-    border-radius: 10px;
-  }
-  
-  .modal-body input {
-    margin-bottom: 1.5rem;
-    border-radius: 5px;
-    padding: 0.8rem;
-  }
-  
   /* Estilo para el botón de registro en el modal */
   button#btnRegistrar {
     background-color: #28a745;
