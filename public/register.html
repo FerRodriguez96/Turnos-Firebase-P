@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Iniciar Sesión</title>
   <!-- Enlace al archivo login.js -->
-  <script type="module" src="login.js" defer></script>
+  <script type="module" src="register.js" defer></script>
   <link rel="stylesheet" href="styleslogin.css">
 </head>
+
 <body>
   <div class="container">
     <!-- Tarjeta de Login -->
@@ -15,6 +17,7 @@
       <h3>¡Bienvenido al sistema de Turnos!</h3>
       <h5>Para ingresar, registrese en el sistema:</h5>
       <form id="registerForm">
+        <input type="name" id="nombre" placeholder="Nombre" required>
         <input type="email" id="email" placeholder="Correo electrónico" required>
         <input type="password" id="clave" placeholder="Contraseña" required>
         <button type="button" id="btnRegistrar">Registrar</button>
@@ -23,8 +26,8 @@
         <p>¿Ya tiene una cuenta? <a href="login.html" id="openModal">Ingrese aquí</a></p>
       </div>
     </div>
-
   </div>
-  
+
 </body>
+
 </html>

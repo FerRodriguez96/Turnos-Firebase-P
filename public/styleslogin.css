@@ -61,7 +61,9 @@ body {
   
   /* Estilo de los campos de entrada */
   input[type="email"],
-  input[type="password"] {
+  input[type="password"], 
+  input[type="name"]
+  {
     width: 80%;
     padding: 0.8rem;
     margin-left: 2rem;
@@ -73,7 +75,8 @@ body {
   }
   
   input[type="email"]:focus,
-  input[type="password"]:focus {
+  input[type="password"]:focus,
+  input[type="name"]:focus {
     border-color: #007bff;
     outline: none;
   }
