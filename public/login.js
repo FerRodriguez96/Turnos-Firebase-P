@@ -59,7 +59,6 @@ function observador() {
   });
 }
 
-
 // Función para asignar roles desde Realtime Database // opner esto en otro
 async function asignarRol(userId) {
   try {

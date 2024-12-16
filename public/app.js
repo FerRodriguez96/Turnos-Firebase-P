@@ -4,11 +4,16 @@ import { firebaseConfig } from "./config.js";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
 import { getDatabase, ref, push, get, update, remove } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-database.js";
 import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
+import { getFirestore, collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
 
 // Inicializar Firebase
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 const auth = getAuth(app);
+const dbfb = getFirestore(app);
+
+// Verificación en consola
+console.log("Firebase y Firestore inicializados correctamente.");
 
 // Validar que la fecha seleccionada sea un día entre semana
 function validarFecha() {
@@ -28,18 +33,19 @@ document.getElementById("fecha").addEventListener("input", validarFecha);
 // Manejar el formulario de creación de turnos
 document.getElementById("turnoForm").addEventListener("submit", async (e) => {
   e.preventDefault();
-
-  const nombre = document.getElementById("nombre").value.trim();
+  
+  const especialidad = document.getElementById("especialidad").value;
+  const profesional = document.getElementById("profesional").value;
   const fecha = document.getElementById("fecha").value;
   const hora = document.getElementById("hora").value;
 
-  if (!nombre || !fecha || !hora) {
+  if (!especialidad || !profesional || !fecha || !hora) {
     alert("Por favor, completa todos los campos.");
     return;
   }
 
   try {
-    await createTurno(nombre, fecha, hora);
+    await createTurno(especialidad, profesional, fecha, hora);
     alert("Turno creado exitosamente.");
     document.getElementById("turnoForm").reset();
     renderTurnos(); // Actualiza la lista de turnos
@@ -49,10 +55,11 @@ document.getElementById("turnoForm").addEventListener("submit", async (e) => {
 });
 
 // Crear un nuevo turno en Firebase
-const createTurno = async (nombre, fecha, hora) => {
+const createTurno = async (especialidad, profesional, fecha, hora) => {
   const turnosRef = ref(db, "appointments");
   const newTurno = {
-    nombre,
+    especialidad,
+    profesional,
     fecha,
     hora,
     status: "Disponible",
@@ -69,6 +76,41 @@ const formatDate = (dateString) => {
 
   return `${day}/${month}/${year}`;
 };
+
+async function obtenerEspecialistas() {
+  const usersRef = collection(dbfb, "users"); // Referencia a la colección "users"
+
+  try {
+    // Hacemos una consulta para filtrar usuarios con role = "specialist"
+    const q = query(usersRef, where("role", "==", "specialist"));
+    const querySnapshot = await getDocs(q);
+
+    const specialists = [];
+    querySnapshot.forEach((doc) => {
+      specialists.push({
+        id: doc.id, // ID del documento
+        nombre: doc.data().nombre, // Campo "nombre" del usuario
+      });
+    });
+
+    // Rellenamos el select con los datos obtenidos
+    rellenarSelectEspecialistas(specialists);
+  } catch (error) {
+    console.error("Error al obtener especialistas:", error);
+  }
+}
+
+function rellenarSelectEspecialistas(specialists) {
+  const select = document.getElementById("profesional");
+
+  specialists.forEach((specialist) => {
+    const option = document.createElement("option");
+    option.value = specialist.id; // ID del documento como valor
+    option.textContent = specialist.nombre; // Mostrar nombre del especialista
+    select.appendChild(option);
+  });
+}
+
 
 // Renderizar la lista de turnos desde Firebase
 const renderTurnos = async () => {
@@ -92,9 +134,9 @@ const renderTurnos = async () => {
       const infoContainer = document.createElement("div");
       infoContainer.className = "turno-info";
 
-      // Nombre
+      // Especialidad
       const nameElement = document.createElement("strong");
-      nameElement.textContent = turno.nombre;
+      nameElement.textContent = turno.especialidad;
 
       // Fecha y hora
       const detailsElement = document.createElement("span");
@@ -230,3 +272,6 @@ document.addEventListener("DOMContentLoaded", observador);
 
 // Inicializar la lista de turnos al cargar la página
 document.addEventListener("DOMContentLoaded", renderTurnos);
+
+// Inicializar la lista de profesionales
+document.addEventListener("DOMContentLoaded", obtenerEspecialistas);
