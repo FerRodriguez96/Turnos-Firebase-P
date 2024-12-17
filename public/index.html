@@ -20,9 +20,6 @@
         <li class="nav-item active">
           <a class="nav-link" href="/index.html">Reserva de Turnos</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/listaTurnos.html">Listado de Turnos</a>
-        </li>
       </ul>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -41,7 +38,7 @@
     <!-- Gestión de Turnos -->
     <div id="turnosSection" class="container">
         <!-- Formulario para crear turno -->
-        <div class="col-md-16">
+        <div class="col-md-15">
           <div class="form-container bg-light p-4 rounded shadow">
             <h2>Reservar turno</h2>
             <p>* Los turnos solo pueden ser de lunes a viernes entre las 07:00 y las 19:00.</p>
@@ -50,7 +47,7 @@
               <div class="mb-3">
                 <label for="especialidad" class="form-label">Especialidad:</label>
                 <select id="especialidad" class="form-select" required>
-                  <option value=""></option>
+                  <option value="" disabled selected>Seleccione una especialidad</option>
                   <option value="Cardiologia">Cardiologia</option>
                   <option value="Pediatria">Pediatria</option>
                   <option value="Medicina general">Medicina general</option>
@@ -63,7 +60,6 @@
                 <select id="profesional" class="form-select">
                   <option value="" disabled selected>Seleccione un profesional:</option>
                 </select>
-                
               </div>
 
               <!-- Campo de Fecha -->

@@ -52,7 +52,6 @@ function observador() {
   onAuthStateChanged(auth, (user) => {
       if (user) {
           console.log("Usuario autenticado:", user.email);
-          // Puedes realizar acciones específicas según el rol del usuario aquí
       } else {
           console.log("No hay usuario autenticado");
       }
