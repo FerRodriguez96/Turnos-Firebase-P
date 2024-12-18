@@ -45,7 +45,7 @@ Este proyecto es una aplicación web para la gestión de turnos médicos. Permit
    - Firebase Hosting
 3. Obtener el archivo de configuración del proyecto (`firebaseConfig`).
 
-📌 Funcionalidades por Desarrollar
+## 📌 Funcionalidades por Desarrollar
 - Panel de Administración: Interfaz para gestionar usuarios, profesionales y turnos.
 - Notificaciones: Enviar confirmaciones de turnos por correo o notificación push.
 - Recuperación de Contraseña: Implementar la funcionalidad para recuperar contraseñas a través de Firebase Authentication.
